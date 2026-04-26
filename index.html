@@ -1,0 +1,514 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" class="min-h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              gold: {
+                50: 'var(--gold-50, #fffbf0)',
+                100: 'var(--gold-100, #fef3d1)',
+                200: 'var(--gold-200, #fde5a2)',
+                300: 'var(--gold-300, #fcd26a)',
+                400: 'var(--gold-400, #fbbc3b)',
+                500: 'var(--gold-500, #f59e0b)',
+                600: 'var(--gold-600, #d97706)',
+                700: 'var(--gold-700, #b45309)',
+                800: 'var(--gold-800, #92400e)',
+                900: 'var(--gold-900, #78350f)'
+              },
+              secondary: { 
+                500: 'var(--gold-600, #d97706)' 
+              }
+            },
+            fontFamily: {
+              cinzel: ['Cinzel', 'serif'],
+              sans: ['Inter', 'sans-serif']
+            },
+            backgroundImage: {
+              'gold-sheen': 'linear-gradient(45deg, transparent 25%, rgba(245,158,11,0.1) 50%, transparent 75%)',
+            },
+            animation: {
+              'shimmer': 'shimmer 2.5s infinite linear',
+              'border-spin': 'border-spin 8s linear infinite',
+              'hero-zoom': 'heroZoom 20s infinite alternate ease-in-out',
+              'subtle-pulse': 'subtle_pulse 2s infinite ease-in-out',
+              'subtle-bounce': 'subtle_bounce 2.5s infinite ease-in-out',
+            },
+            keyframes: {
+              heroZoom: {
+                '0%': { transform: 'scale(1)' },
+                '100%': { transform: 'scale(1.1)' },
+              },
+              subtle_pulse: { /* Corrigido para escala e opacidade */
+                '0%, 100%': { transform: 'scale(1)', opacity: '0.8' },
+                '50%': { transform: 'scale(1.03)', opacity: '1' },
+              },
+              subtle_bounce: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-6px)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      :root {
+        --gold-50: #fffbf0;
+        --gold-100: #fef3d1;
+        --gold-200: #fde5a2;
+        --gold-300: #fcd26a;
+        --gold-400: #fbbc3b;
+        --gold-500: #f59e0b;
+        --gold-600: #d97706;
+        --gold-700: #b45309;
+        --gold-800: #92400e;
+        --gold-900: #78350f;
+        
+        --gold-primary: var(--gold-500);
+        --gold-primary-rgb: 245, 158, 11;
+        --gold-secondary: var(--gold-600);
+        --header-bg-color: #000000;
+        --header-height: 80px; 
+        
+        --font-title: 'Cinzel', serif;
+        --font-subtitle: 'Inter', sans-serif;
+        --font-desc: 'Inter', sans-serif;
+        
+        /* Default gradient fallback (Gold) */
+        --brand-gradient: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+      }
+      
+      html { scroll-behavior: smooth; }
+      body {
+        background-color: #000000;
+        color: var(--gold-secondary); /* Usa a cor secundária dinâmica */
+        font-family: var(--font-desc);
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      
+
+      /* SCROLL REVEAL ANIMATION */
+      .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
+      }
+      .reveal-on-scroll.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* GRADIENTE METÁLICO DINÂMICO */
+      /* Agora usa a variável --brand-gradient calculada via JS no App.tsx */
+      .gold-text-gradient {
+        background: var(--brand-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+        background-size: 200% auto;
+        animation: shine 5s linear infinite;
+      }
+      
+      @keyframes shine {
+        to {
+          background-position: 200% center;
+        }
+      }
+
+      /* EFEITO DE SOMBRA PREMIUM PARA O TÍTULO PRINCIPAL */
+      .hero-title-shadow {
+        text-shadow:
+            0 4px 6px rgba(0, 0, 0, 0.7), /* Sombra principal, mais escura e deslocada */
+            0 1px 2px rgba(0, 0, 0, 0.9), /* Sombra curta e nítida para contorno */
+            0 0 80px var(--gold-primary, #f59e0b)33; /* Brilho sutil aumentado */
+      }
+
+      /* NOVA Sombra para o nome da marca (mais sutil) */
+      .brand-name-shadow {
+        text-shadow: 0 1px 2px rgba(0,0,0,0.6), 0 0 10px var(--gold-primary, #f59e0b)33;
+      }
+
+      /* UI Elements */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: #050505; }
+      ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--gold-500); }
+
+      /* PREVENÇÃO TOTAL DE AUTOFILL BRANCO E SUGESTÕES DO NAVEGADOR */
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover, 
+      input:-webkit-autofill:focus, 
+      input:-webkit-autofill:active,
+      textarea:-webkit-autofill,
+      textarea:-webkit-autofill:hover,
+      textarea:-webkit-autofill:focus,
+      textarea:-webkit-autofill:active,
+      select:-webkit-autofill,
+      select:-webkit-autofill:hover,
+      select:-webkit-autofill:focus,
+      select:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 1000px #0a0a0a inset !important;
+        -webkit-text-fill-color: #ffffff !important;
+        caret-color: #ffffff !important;
+        transition: background-color 50000s ease-in-out 0s !important;
+        color-scheme: dark !important;
+      }
+
+      /* Removendo brilhos, contornos e forçando fundo escuro em todos os inputs */
+      input, textarea, select {
+        background-color: rgba(10, 10, 10, 0.5) !important;
+        outline: none !important;
+        color-scheme: dark !important;
+      }
+
+      .glass-panel {
+        background: rgba(10, 10, 10, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08); 
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+      }
+
+      .premium-input {
+        @apply w-full min-w-0 appearance-none rounded-lg border border-zinc-700 bg-zinc-900/50 px-4 py-3 text-base text-zinc-200 shadow-inner shadow-black/20 outline-none transition-all duration-300 placeholder:text-zinc-600;
+        box-sizing: border-box !important;
+        max-width: 100% !important;
+      }
+      .premium-input:focus {
+        @apply border-gold-500 bg-zinc-900;
+        box-shadow: 0 0 15px rgba(var(--gold-primary-rgb), 0.2);
+      }
+      textarea.premium-input {
+        @apply min-h-[120px] resize-y;
+      }
+      
+      .premium-label { @apply text-[10px] text-zinc-500 font-black uppercase tracking-[0.2em] mb-1 block; }
+
+      .jewel-button {
+        @apply relative overflow-hidden px-8 py-4 bg-zinc-900 border border-gold-500/20 text-gray-400 font-black text-[10px] uppercase tracking-[0.3em] transition-all duration-500;
+      }
+      .jewel-button:hover {
+        @apply border-gold-500/50 text-gold-400 bg-gold-900/10 shadow-[0_0_20px_rgba(245,158,11,0.15)];
+      }
+      .jewel-button.active {
+        @apply bg-gold-500 text-black border-gold-400 shadow-[0_0_30px_rgba(245,158,11,0.4)];
+      }
+
+      .header-login-button {
+        position: relative;
+        overflow: hidden;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 2px 4px rgba(0,0,0,0.5);
+        color: rgba(255, 255, 255, 0.6);
+        transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .header-login-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -80%;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+        transform: skewX(-25deg);
+        transition: left 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+      }
+      .header-login-button:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: var(--gold-400);
+        transform: translateY(-2px);
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 6px 12px rgba(0,0,0,0.6), 0 0 25px rgba(var(--gold-primary-rgb), 0.2);
+      }
+      .header-login-button:hover::before {
+        left: 120%;
+      }
+      .header-login-button .fa-lock {
+        font-size: 18px;
+        color: rgba(255,255,255,0.4);
+        transition: transform 0.4s ease-out, color 0.4s ease-out;
+      }
+      .header-login-button:hover .fa-lock {
+        transform: scale(1.1);
+        color: var(--gold-400);
+      }
+
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+      /* Spotlights & Borders */
+      .spotlight-card {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(145deg, #121212 0%, #050505 100%); 
+        border: 1px solid rgba(255,255,255,0.03); 
+        /* Adicionado para efeito 3D sutil */
+        transition: transform 0.5s ease-out, box-shadow 0.5s ease-out;
+        will-change: transform, box-shadow;
+      }
+      .spotlight-card:before {
+        content: '';
+        position: absolute;
+        left: var(--mouse-x, 50%);
+        top: var(--mouse-y, 50%);
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle closest-side, rgba(255,255,255,0.06), transparent);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 0.5s;
+        pointer-events: none;
+      }
+      .spotlight-card:hover:before { opacity: 1; }
+
+      .animated-border-box { position: relative; overflow: hidden; padding: 1px; }
+      .animated-border-box::before {
+        content: '';
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 200%; height: 200%;
+        background: conic-gradient(from 0deg, transparent 0%, var(--gold-500) 10%, transparent 25%);
+        animation: border-spin 4s linear infinite;
+        transform: translate(-50%, -50%);
+      }
+      .animated-border-box > .inner-content {
+        height: 100%; width: 100%; position: relative; z-index: 1;
+      }
+
+      .vip-divider {
+        display: flex; align-items: center; justify-content: center;
+        color: var(--gold-600); width: 100%; max-width: 150px; margin: 0 auto; opacity: 0.3;
+      }
+      .vip-divider::before, .vip-divider::after {
+        content: ''; flex: 1; height: 1px;
+        background: linear-gradient(to right, transparent, var(--gold-600), transparent);
+      }
+      .vip-divider i { margin: 0 10px; font-size: 8px; color: var(--gold-500); }
+
+      .scroll-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 2px 4px rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.4s ease;
+        overflow: hidden;
+      }
+      .scroll-to-top.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .scroll-to-top::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -80%;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+        transform: skewX(-25deg);
+        transition: left 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+      }
+      .scroll-to-top:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: var(--gold-400);
+        transform: translateY(-2px);
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 6px 12px rgba(0,0,0,0.6), 0 0 25px rgba(var(--gold-primary-rgb), 0.2);
+      }
+      .scroll-to-top:hover::before {
+        left: 120%;
+      }
+      .scroll-to-top .fa-arrow-up {
+        font-size: 18px;
+        color: rgba(255,255,255,0.4);
+        transition: transform 0.4s ease-out, color 0.4s ease-out;
+      }
+      .scroll-to-top:hover .fa-arrow-up {
+        transform: scale(1.1);
+        color: var(--gold-400);
+      }
+
+      .dynamic-logo-mask {
+        background-color: var(--gold-primary);
+        -webkit-mask-image: var(--logo-url); mask-image: var(--logo-url);
+        -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+        -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+        -webkit-mask-position: center; mask-position: center;
+        -webkit-mask-mode: luminance; mask-mode: luminance; 
+        -webkit-mask-source-type: luminance;
+      }
+
+      .map-iframe {
+        filter: invert(1) hue-rotate(180deg) contrast(0.9);
+        border-radius: 1.5rem; /* 24px */
+      }
+
+      /* Animação FadeIn simples para modais e carregamento */
+      @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+      .animate-fadeIn { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      
+      @keyframes shimmer {
+        0% { transform: translateX(-150%) skewX(-45deg); }
+        100% { transform: translateX(150%) skewX(-45deg); }
+      }
+      @keyframes border-spin { 100% { transform: rotate(360deg); } }
+
+      /* Admin Panel Specific Styles */
+      .admin-menu-item {
+        @apply relative h-32 rounded-xl border transition-all duration-300 flex flex-col items-center justify-center gap-3 overflow-hidden
+               shadow-lg; /* Add a default shadow */
+        background: linear-gradient(145deg, #121212 0%, #050505 100%); /* Subtle dark gradient for inactive */
+      }
+      .admin-menu-item.inactive {
+        @apply bg-zinc-900/40 border-white/5 text-zinc-500;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+      }
+      .admin-menu-item.inactive:hover {
+        @apply bg-zinc-800 hover:text-zinc-300 hover:border-white/10;
+        transform: translateY(-2px) scale(1.01); /* Subtle lift on hover */
+        box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      }
+      .admin-menu-item.active {
+        @apply bg-gold-500 text-black border-gold-400;
+        box-shadow: 0 0 40px rgba(245,158,11,0.5), inset 0 0 15px rgba(0,0,0,0.4); /* Stronger gold glow with inner shadow */
+        transform: scale(1.02); /* Slightly larger when active */
+      }
+      .admin-menu-item .admin-menu-icon {
+        @apply text-2xl transition-transform duration-300 group-hover:scale-110;
+      }
+      .admin-menu-item.inactive .admin-menu-icon {
+        @apply text-zinc-600 group-hover:text-gold-500;
+      }
+      .admin-menu-item.active .admin-menu-icon {
+        @apply text-black;
+      }
+
+      /* Specific style for saving button state */
+      .admin-save-button-saving .fa-spinner {
+          @apply text-gold-300 text-xl; /* Make spinner larger and gold */
+      }
+
+      /* Products Section Title Premium Underline */
+      .products-section-title-premium {
+        position: relative;
+        display: inline-block; /* Essential for ::after positioning relative to text */
+        padding-bottom: 12px; /* Space for the underline */
+      }
+      .products-section-title-premium::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%) scaleX(0.2); /* Start small and transparent */
+        width: 100%; /* Base width */
+        height: 3px; /* Thickness */
+        background: var(--brand-gradient); /* Use brand gradient for gold effect */
+        border-radius: 2px;
+        opacity: 0;
+        transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1); /* Smooth animation */
+        box-shadow: 0 0 0px var(--gold-500);
+      }
+      .products-section-title-premium.is-visible::after {
+        transform: translateX(-50%) scaleX(1); /* Expand on visible */
+        opacity: 1;
+        box-shadow: 0 0 15px rgba(245,158,11,0.4); /* Soft gold glow */
+      }
+      .underline-target-mobile {
+        position: relative;
+        display: inline-block;
+      }
+      
+      @media (max-width: 767px) {
+        /* On mobile, hide the underline from the main H2 */
+        .products-section-title-premium::after {
+            display: none;
+        }
+
+        /* Create and animate the underline for the span */
+        .underline-target-mobile::after {
+            content: '';
+            position: absolute;
+            bottom: -12px; /* Position below the text, compensating for parent's padding */
+            left: 50%;
+            transform: translateX(-50%) scaleX(0.2);
+            width: 100%;
+            height: 3px;
+            background: var(--brand-gradient);
+            border-radius: 2px;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+            box-shadow: 0 0 0px var(--gold-500);
+        }
+
+        .products-section-title-premium.is-visible .underline-target-mobile::after {
+            transform: translateX(-50%) scaleX(1);
+            opacity: 1;
+            box-shadow: 0 0 15px rgba(245,158,11,0.4);
+        }
+      }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai",
+    "firebase/app": "https://esm.sh/firebase@10.8.0/app",
+    "firebase/firestore": "https://esm.sh/firebase@10.8.0/firestore",
+    "firebase/": "https://esm.sh/firebase@10.8.0/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body style="background-color: #000000; margin: 0;">
+    <div id="root">
+        <!-- Pre-loader minimal para evitar flicker original -->
+        <div id="pre-loader" style="position: fixed; inset: 0; background: #000000; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 999999; font-family: 'Cinzel', serif;">
+            <div style="width: 40px; height: 40px; border: 2px solid rgba(255,255,255,0.05); border-top-color: #ffffff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <div style="margin-top: 20px; color: #ffffff; font-size: 10px; opacity: 0.5; letter-spacing: 0.3em; font-weight: 900; text-transform: uppercase;">PLATAFORMA DIGITAL</div>
+            <style>
+                @keyframes spin { to { transform: rotate(360deg); } }
+            </style>
+        </div>
+    </div>
+    <script type="module" src="./index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+{
+  "entities": {
+    "StoreConfig": {
+      "title": "Configuração da Loja",
+      "description": "Configurações administrativas e da marca para uma loja específica.",
+      "type": "object",
+      "properties": {
+        "adminPin": { "type": "string" },
+        "brand": { "$ref": "#/entities/BrandConfig" }
+      },
+      "required": ["adminPin", "brand"]
+    },
+    "BrandConfig": {
+      "title": "Configuração da Marca",
+      "description": "Identidade visual e conteúdo do site.",
+      "type": "object",
+      "properties": {
+        "logoUrl": { "type": "string" },
+        "brandName": { "type": "string" },
+        "primaryColor": { "type": "string" },
+        "secondaryColor": { "type": "string" },
+        "homeHero": { "type": "object" },
+        "products": { "type": "array" },
+        "gallery": { "type": "array" }
+      }
+    },
+    "Booking": {
+      "title": "Agendamento",
+      "description": "Dados de um agendamento solicitado pelo cliente.",
+      "type": "object",
+      "properties": {
+        "service": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "clientName": { "type": "string" },
+        "clientPhone": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"] }
+      }
+    }
+  },
+  "firestore": {
+    "stores/{pin}": {
+      "schema": "StoreConfig",
+      "description": "Configurações privadas de cada loja identificada pelo PIN."
+    },
+    "stores/{pin}/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Agendamentos recebidos por uma loja específica."
+    },
+    "public/main_config": {
+      "schema": "BrandConfig",
+      "description": "Configuração da marca publicada para a página principal."
+    }
+  }
+}

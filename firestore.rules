@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) { 
+      return id is string && id.size() >= 4 && id.size() <= 64 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+
+    // Stores collection: Private configurations
+    match /stores/{pin} {
+      allow list: if true; 
+      allow get: if true; 
+      allow write: if isValidId(pin);
+      allow delete: if true; 
+
+      match /bookings/{bookingId} {
+        allow read, write: if true; // No demo we allow everything, in real apps we would restrict
+      }
+    }
+
+    // Public collection: The published landing page
+    match /public/{docId} {
+      allow read: if true;
+      allow write: if docId == 'main_config' || docId == 'connectivity_test';
+    }
+  }
+}
