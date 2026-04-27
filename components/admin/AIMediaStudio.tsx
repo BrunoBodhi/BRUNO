@@ -45,21 +45,21 @@ const AIMediaStudio: React.FC<AIMediaStudioProps> = ({
       let fullPrompt: string;
 
       if (imageType === 'logo') {
-        fullPrompt = `Atue como o Designer Gráfico mais premiado do mundo, especialista em marcas de ultra-luxo (High-End Luxury).
-        Crie um SÍMBOLO/ÍCONE DE LOGOTIPO 3D COM ACABAMENTO METÁLICO (OURO/PLATINA).
+        fullPrompt = `Atue como um Designer Gráfico de alto padrão especialista em branding de luxo.
+        Crie um SÍMBOLO/ÍCONE DE LOGOTIPO 3D COM ACABAMENTO METÁLICO (OURO/PLATINA) ou minimalista.
         
         ESTÉTICA VISUAL (PREMIUM & PROFUNDIDADE):
-        - Estilo: Minimalismo Sofisticado, Efeito 3D Metálico, Geometria Elegante.
-        - COR DO DESENHO: OURO PÁLIDO, PLATINA ou BRANCO PEROLADO. (Cores claras funcionam melhor para máscaras).
-        - COR DO FUNDO: PRETO ABSOLUTO (#000000). FUNDO ESCURO UNIFORME.
-        - ILUMINAÇÃO: Luz de estúdio dramática, reflexos sutis, alto contraste.
+        - Estilo: Minimalismo Sofisticado, Efeito 3D Metálico ou Flat Design Elegante.
+        - COR DO DESENHO: OURO PÁLIDO, PLATINA ou BRANCO PEROLADO.
+        - COR DO FUNDO: PRETO ABSOLUTO (#000000).
+        - ILUMINAÇÃO: Luz de estúdio dramática.
         
         REGRAS TÉCNICAS:
         1. FUNDO PRETO: Essencial para que o sistema remova o fundo automaticamente (se usado como máscara).
         2. SEM TEXTO: Apenas o ícone/símbolo. Não escreva nada.
         3. CENTRALIZADO: O ícone deve ocupar o centro com margem de respiro.
         
-        Objeto a ser desenhado: "${prompt}".`;
+        Objeto a ser desenhado/Ideia central: "${prompt}".`;
       } else {
         fullPrompt = `Crie uma imagem profissional e de alta qualidade para um site de luxo. A imagem deve ser fotorrealista, elegante e seguir o tema: "${prompt}".`;
       }
