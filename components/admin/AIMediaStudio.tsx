@@ -64,20 +64,22 @@ const AIMediaStudio: React.FC<AIMediaStudioProps> = ({
         fullPrompt = `Crie uma imagem profissional e de alta qualidade para um site de luxo. A imagem deve ser fotorrealista, elegante e seguir o tema: "${prompt}".`;
       }
       
-      const response = await ai.models.generateImages({
-        model: 'imagen-4.0-generate-001',
-        prompt: fullPrompt,
+      const response = await ai.models.generateContent({
+        model: 'gemini-3.1-flash-image-preview',
+        contents: fullPrompt,
         config: {
-          numberOfImages: 4,
-          outputMimeType: 'image/jpeg',
-          aspectRatio: aspectRatio
+          imageConfig: {
+            aspectRatio: aspectRatio
+          }
         }
       });
 
       const images: string[] = [];
-      if (response.generatedImages && response.generatedImages.length > 0) {
-        for (const img of response.generatedImages) {
-          images.push(`data:image/jpeg;base64,${img.image.imageBytes}`);
+      if (response.candidates && response.candidates.length > 0) {
+        for (const part of response.candidates[0].content.parts) {
+          if (part.inlineData) {
+            images.push(`data:image/png;base64,${part.inlineData.data}`);
+          }
         }
       }
 
