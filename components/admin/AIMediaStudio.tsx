@@ -14,7 +14,7 @@ interface AIMediaStudioProps {
   imageType?: ImageType;
 }
 
-const API_KEY = process.env.API_KEY;
+const API_KEY = process.env.GEMINI_API_KEY;
 
 const AIMediaStudio: React.FC<AIMediaStudioProps> = ({
   isOpen,
@@ -64,20 +64,20 @@ const AIMediaStudio: React.FC<AIMediaStudioProps> = ({
         fullPrompt = `Crie uma imagem profissional e de alta qualidade para um site de luxo. A imagem deve ser fotorrealista, elegante e seguir o tema: "${prompt}".`;
       }
       
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash-image',
-        contents: { parts: [{ text: fullPrompt }] },
+      const response = await ai.models.generateImages({
+        model: 'imagen-4.0-generate-001',
+        prompt: fullPrompt,
         config: {
-          imageConfig: { aspectRatio } 
+          numberOfImages: 4,
+          outputMimeType: 'image/jpeg',
+          aspectRatio: aspectRatio
         }
       });
 
       const images: string[] = [];
-      if (response.candidates && response.candidates.length > 0) {
-        for (const part of response.candidates[0].content.parts) {
-          if (part.inlineData) {
-            images.push(`data:image/png;base64,${part.inlineData.data}`);
-          }
+      if (response.generatedImages && response.generatedImages.length > 0) {
+        for (const img of response.generatedImages) {
+          images.push(`data:image/jpeg;base64,${img.image.imageBytes}`);
         }
       }
 

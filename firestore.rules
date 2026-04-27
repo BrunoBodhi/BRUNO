@@ -19,16 +19,16 @@ service cloud.firestore {
     // we use schema validation to prevent structural poisoning, though reads are allowed.
     
     function isValidBrand(brand) {
-       return brand is map && brand.size() <= 100
-         && brand.get('brandName', '') is string && brand.get('brandName', '').size() <= 100
-         && brand.get('logoUrl', '') is string && brand.get('logoUrl', '').size() <= 1048576
-         && brand.get('primaryColor', '') is string && brand.get('primaryColor', '').size() <= 30
-         && brand.get('secondaryColor', '') is string && brand.get('secondaryColor', '').size() <= 30;
+       return brand is map && brand.size() <= 200
+         && (!brand.keys().hasAny(['brandName']) || brand.get('brandName', '') is string)
+         && (!brand.keys().hasAny(['logoUrl']) || brand.get('logoUrl', '') is string)
+         && (!brand.keys().hasAny(['primaryColor']) || brand.get('primaryColor', '') is string)
+         && (!brand.keys().hasAny(['secondaryColor']) || brand.get('secondaryColor', '') is string);
     }
 
     function isValidStoreConfig(data) {
-      return data.size() >= 0 && data.size() <= 10
-        && data.get('adminPin', '') is string && data.get('adminPin', '').size() <= 4
+      return data is map && data.size() >= 0 && data.size() <= 50
+        && (!data.keys().hasAny(['adminPin']) || data.get('adminPin', '') is string)
         && (!data.keys().hasAny(['brand']) || isValidBrand(data.brand));
     }
     

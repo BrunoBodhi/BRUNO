@@ -11,7 +11,7 @@ interface AIContentModalProps {
 
 // ATENÇÃO: A Chave de API é gerenciada externamente.
 // Assumimos que process.env.API_KEY está disponível no ambiente de execução.
-const API_KEY = process.env.API_KEY;
+const API_KEY = process.env.GEMINI_API_KEY;
 
 const AIContentModal: React.FC<AIContentModalProps> = ({
   isOpen,

@@ -116,14 +116,6 @@ const BookingsManagerDrawer: React.FC<BookingsManagerDrawerProps> = ({ pin, stor
     setIsSaving(false);
   };
 
-  // For redirection
-  const bookingConfig = storeConfig.brand.booking || {};
-  const [redirData, setRedirData] = useState({
-    successActionType: bookingConfig.successActionType ?? 'none',
-    successLink: bookingConfig.successLink ?? '',
-    whatsappNumber: bookingConfig.whatsappNumber ?? '',
-    whatsappNotify: bookingConfig.whatsappNotify ?? false
-  });
 
   const saveRedir = async () => {
     setIsSaving(true);

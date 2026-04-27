@@ -48,9 +48,9 @@ export const DEFAULT_BRAND_CONFIG: BrandConfig = {
     scrollIndicatorText: 'SAIBA MAIS',
   },
   homeFeatureCards: [
-    { id: 'hf1', icon: 'fa-solid fa-crown', title: 'ATENDIMENTO VIP', description: 'Experimente um serviço exclusivo e personalizado, onde cada detalhe é pensado para sua satisfação total.' },
-    { id: 'hf2', icon: 'fa-solid fa-spray-can-sparkles', title: 'PRODUTOS PREMIUM', description: 'Utilizamos apenas produtos de alta performance e marcas renomadas para garantir o melhor resultado.' },
-    { id: 'hf3', icon: 'fa-solid fa-gem', title: 'AMBIENTE EXCLUSIVO', description: 'Desfrute de um espaço sofisticado e confortável, projetado para oferecer uma experiência única e relaxante.' }
+    { id: 'hf1', active: true, icon: 'fa-solid fa-crown', title: 'ATENDIMENTO VIP', description: 'Experimente um serviço exclusivo e personalizado, onde cada detalhe é pensado para sua satisfação total.' },
+    { id: 'hf2', active: true, icon: 'fa-solid fa-spray-can-sparkles', title: 'PRODUTOS PREMIUM', description: 'Utilizamos apenas produtos de alta performance e marcas renomadas para garantir o melhor resultado.' },
+    { id: 'hf3', active: true, icon: 'fa-solid fa-gem', title: 'AMBIENTE EXCLUSIVO', description: 'Desfrute de um espaço sofisticado e confortável, projetado para oferecer uma experiência única e relaxante.' }
   ],
 
   // Galeria
